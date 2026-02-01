@@ -12,7 +12,11 @@ with st.sidebar:
     st.header(":green[Mohammad Miraz Ali]")
     st.write(":green[Dept. of EEE]\n\n:green[University of Dhaka]")
 
-model = ChatGroq(model="llama-3.3-70b-versatile", groq_api_key="GROQ_API_KEY")
+try:
+    model = ChatGroq(model="llama-3.3-70b-versatile", groq_api_key=st.secrets["GROQ_API_KEY"])
+except Exception as e:
+    st.error("API Key not found! Please set GROQ_API_KEY in Streamlit Secrets.")
+    st.stop()
 
 for m in st.session_state.messages:
     if not isinstance(m, SystemMessage):
